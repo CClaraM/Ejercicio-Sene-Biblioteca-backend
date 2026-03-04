@@ -61,6 +61,7 @@ export const LIST_MIS_PRESTAMOS = `
   SELECT
     p.id_prestamo,
     p.fecha_prestamo,
+    p.fecha_vencimiento,
     p.fecha_devolucion,
     p.estado,
     l.id_libro,

@@ -35,11 +35,20 @@ app.use("/api", prestamosRoutes);
 app.use("/api/bibliotecario", bibliotecarioRoutes);
 
 
+
 app.use("/api", devolucionesRoutes);
 app.use("/api/admin/libros", adminLibrosRoutes);
 app.use("/api/admin/import", adminImportRoutes);
 app.use("/api/admin/libros", adminPortadasRoutes);
 
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+
+app.use((err, req, res, next) => {
+  console.error(err);
+
+  res.status(err.status || 500).json({
+    message: err.message || "Error interno del servidor"
+  });
+});
 
 export default app;

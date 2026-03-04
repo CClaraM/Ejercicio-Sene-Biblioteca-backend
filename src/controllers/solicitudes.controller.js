@@ -1,5 +1,5 @@
 import { pool } from "../db/pool.js";
-import { EXISTS_SOLICITUD_PENDIENTE, INSERT_SOLICITUD, COUNT_EJEMPLARES_DISPONIBLES } from "../sql/solicitudes.sql.js";
+import { EXISTS_SOLICITUD_PENDIENTE, INSERT_SOLICITUD, COUNT_EJEMPLARES_DISPONIBLES, LIST_MIS_SOLICITUDES } from "../sql/solicitudes.sql.js";
 
 export const SolicitudesController = {
   async crear(req, res) {
@@ -24,4 +24,11 @@ export const SolicitudesController = {
     const [result] = await pool.query(INSERT_SOLICITUD, [id_usuario, id_libro]);
     res.status(201).json({ id_solicitud: result.insertId });
   },
+
+  async misSolicitudes(req, res) {
+    const id_usuario = req.user.id_usuario;
+    const [rows] = await pool.query(LIST_MIS_SOLICITUDES, [id_usuario]);
+    res.json(rows);
+  },
+
 };
